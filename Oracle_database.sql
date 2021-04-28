@@ -1,4 +1,3 @@
-
 create or replace TYPE t_films_table IS OBJECT(id NUMBER(10,0), title varchar2(200),image varchar2(200));
 create or replace TYPE t_table IS TABLE OF t_films_table;
 
