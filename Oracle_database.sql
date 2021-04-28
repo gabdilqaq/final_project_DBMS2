@@ -1,6 +1,3 @@
-create or replace TYPE t_films IS OBJECT(id NUMBER(10,0), title varchar2(200),image varchar2(200));
-create or replace TYPE t_table_length IS TABLE OF t_films;
-
 
 create or replace TYPE t_films_table IS OBJECT(id NUMBER(10,0), title varchar2(200),image varchar2(200));
 create or replace TYPE t_table IS TABLE OF t_films_table;
@@ -101,3 +98,130 @@ CREATE OR REPLACE PACKAGE BODY films_filter AS
         RETURN t_result;
     END year_search;
 END;
+
+CREATE OR REPLACE FUNCTION search_film(p_film_name IN films.title%TYPE)
+    RETURN t_table IS
+    t_result t_table := t_table();
+    CURSOR cur_title IS SELECT id,title,image FROM films
+        WHERE title = p_film_name AND popularity IS NOT NULL
+        ORDER BY popularity desc;
+BEGIN
+    FOR v_rec_film IN cur_title LOOP
+        t_result.extend;
+            t_result(t_result.count) := t_films_table(null, null,null);
+            t_result(t_result.count).id := v_rec_film.id;
+            t_result(t_result.count).title :=  v_rec_film.title;
+            t_result(t_result.count).image :=  v_rec_film.image;
+    END LOOP;
+    RETURN t_result;
+END;
+
+
+
+
+CREATE OR REPLACE FUNCTION all_films 
+    RETURN t_table IS
+    t_result t_table :=t_table();
+    CURSOR cur_all_film IS SELECT id ,title ,image FROM films;
+BEGIN
+    FOR v_rec_all_film IN cur_all_film LOOP
+        t_result.extend;
+            t_result(t_result.count) := t_films_table(null, null,null);
+            t_result(t_result.count).id := v_rec_all_film.id;
+            t_result(t_result.count).title :=  v_rec_all_film.title;
+            t_result(t_result.count).image :=  v_rec_all_film.image;
+    END LOOP;
+    RETURN t_result;
+END;
+
+
+
+create or replace PROCEDURE update_films(
+    v_year IN films.year%TYPE,
+    v_length IN films.length%TYPE,
+    v_title IN films.title%TYPE,
+    v_subject IN films.subject%TYPE,
+    v_actor IN films.actor%TYPE,
+    v_actress IN films.actress%TYPE,
+    v_director IN films.director%TYPE,
+    v_popularity IN films.popularity%TYPE,
+    v_awards IN films.awards%TYPE,
+    v_image IN films.awards%TYPE,
+    v_ID IN films.ID%TYPE) IS
+BEGIN
+     UPDATE films SET 
+        year = v_year,
+        length = v_length,
+        title = v_title,
+        subject = v_subject,
+        actor = v_actor,
+        actress = v_actress,
+        director = v_director,
+        popularity = v_popularity,
+        awards = v_awards,
+        image = v_image
+            WHERE id = v_id;
+END update_films;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+alter table films drop column id;
+ALTER TABLE table_name ADD (id NUMBER(10));
+UPDATE table_name SET id=ROWNUM;
+ALTER TABLE table_name MODIFY (id PRIMARY KEY);
+
+CREATE SEQUENCE film_id START WITH 1911;
+
+CREATE OR REPLACE TRIGGER film_id_add 
+BEFORE INSERT ON films
+FOR EACH ROW
+BEGIN
+  SELECT film_id.NEXTVAL
+  INTO   :new.id
+  FROM   dual;
+END;
+
+INSERT INTO films (YEAR, LENGTH, TITLE, SUBJECT, ACTOR, ACTRESS, DIRECTOR, POPULARITY, AWARDS, IMAGE) VALUES (
+    1991,
+    144,
+    'Robin Hood: Prince of Thieves',
+    'Action',
+    'Costner',
+    'tets',
+    'Mastrantonio',
+    8,
+    'no',
+    'NicholasCage.png'
+);
+
+SELECT * FROM FILMS
+WHERE id >= 1900
