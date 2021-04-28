@@ -137,8 +137,20 @@ END;
 SELECT * FROM table(all_films);
 
 
-
-create or replace PROCEDURE update_films(
+CREATE OR REPLACE PACKAGE query AS
+    PROCEDURE insert_films(
+    v_year IN films.year%TYPE,
+    v_length IN films.length%TYPE,
+    v_title IN films.title%TYPE,
+    v_subject IN films.subject%TYPE,
+    v_actor IN films.actor%TYPE,
+    v_actress IN films.actress%TYPE,
+    v_director IN films.director%TYPE,
+    v_popularity IN films.popularity%TYPE,
+    v_awards IN films.awards%TYPE,
+    v_image IN films.awards%TYPE);
+    
+    PROCEDURE update_films(
     v_year IN films.year%TYPE,
     v_length IN films.length%TYPE,
     v_title IN films.title%TYPE,
@@ -149,49 +161,74 @@ create or replace PROCEDURE update_films(
     v_popularity IN films.popularity%TYPE,
     v_awards IN films.awards%TYPE,
     v_image IN films.awards%TYPE,
-    v_ID IN films.ID%TYPE) IS
-BEGIN
-     UPDATE films SET 
-        year = v_year,
-        length = v_length,
-        title = v_title,
-        subject = v_subject,
-        actor = v_actor,
-        actress = v_actress,
-        director = v_director,
-        popularity = v_popularity,
-        awards = v_awards,
-        image = v_image
-            WHERE id = v_id;
-END update_films;
+    v_ID IN films.ID%TYPE);
+    
+    PROCEDURE delete_film(p_id IN films.ID%TYPE);
+END;
 
 
-create or replace PROCEDURE insert_films(
-    v_year IN films.year%TYPE,
-    v_length IN films.length%TYPE,
-    v_title IN films.title%TYPE,
-    v_subject IN films.subject%TYPE,
-    v_actor IN films.actor%TYPE,
-    v_actress IN films.actress%TYPE,
-    v_director IN films.director%TYPE,
-    v_popularity IN films.popularity%TYPE,
-    v_awards IN films.awards%TYPE,
-    v_image IN films.awards%TYPE)
-    IS
-BEGIN
-     INSERT INTO films(year, length,title,subject,actor,actress,director,popularity, awards,image)
-     VALUES(
-         v_year,
-        v_length,
-        v_title,
-        v_subject,
-        v_actor,
-        v_actress,
-        v_director,
-        v_popularity,
-        v_awards,
-        v_image);
-END insert_films;
+CREATE OR REPLACE PACKAGE BODY query AS
+    PROCEDURE update_films(
+        v_year IN films.year%TYPE,
+        v_length IN films.length%TYPE,
+        v_title IN films.title%TYPE,
+        v_subject IN films.subject%TYPE,
+        v_actor IN films.actor%TYPE,
+        v_actress IN films.actress%TYPE,
+        v_director IN films.director%TYPE,
+        v_popularity IN films.popularity%TYPE,
+        v_awards IN films.awards%TYPE,
+        v_image IN films.awards%TYPE,
+        v_ID IN films.ID%TYPE) IS
+    BEGIN
+         UPDATE films SET 
+            year = v_year,
+            length = v_length,
+            title = v_title,
+            subject = v_subject,
+            actor = v_actor,
+            actress = v_actress,
+            director = v_director,
+            popularity = v_popularity,
+            awards = v_awards,
+            image = v_image
+                WHERE id = v_id;
+    END update_films;
+
+
+    PROCEDURE insert_films(
+        v_year IN films.year%TYPE,
+        v_length IN films.length%TYPE,
+        v_title IN films.title%TYPE,
+        v_subject IN films.subject%TYPE,
+        v_actor IN films.actor%TYPE,
+        v_actress IN films.actress%TYPE,
+        v_director IN films.director%TYPE,
+        v_popularity IN films.popularity%TYPE,
+        v_awards IN films.awards%TYPE,
+        v_image IN films.awards%TYPE)
+        IS
+    BEGIN
+         INSERT INTO films(year, length,title,subject,actor,actress,director,popularity, awards,image)
+         VALUES(
+             v_year,
+            v_length,
+            v_title,
+            v_subject,
+            v_actor,
+            v_actress,
+            v_director,
+            v_popularity,
+            v_awards,
+            v_image);
+    END insert_films;
+
+    PROCEDURE delete_film(p_id IN films.ID%TYPE) IS 
+    BEGIN
+        DELETE FROM films 
+            WHERE id = p_id;
+    END;
+END query;
 
 --BEGIN
 --    insert_films(1654,100,'Kozy Korpesh','Drama','Kozy','Bayan','Akan',100,'Yes','kaz.png');
@@ -258,3 +295,15 @@ INSERT INTO films (YEAR, LENGTH, TITLE, SUBJECT, ACTOR, ACTRESS, DIRECTOR, POPUL
 
 SELECT * FROM FILMS
 WHERE id >= 1900
+
+
+
+    
+  
+  
+  
+  
+  
+  
+
+        
