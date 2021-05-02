@@ -1,20 +1,20 @@
-
+--main table 
 create or replace TYPE t_films_table IS OBJECT(id NUMBER(10,0), title varchar2(200),image varchar2(200));
 create or replace TYPE t_table IS TABLE OF t_films_table;
 
-
+--table for statistics
 create or replace TYPE t_top_year IS OBJECT(year_of_release NUMBER(10,0), number_of_films NUMBER(10,0));
 create or replace TYPE t_top_year_table IS TABLE OF t_top_year;
 
-
+--table of actions
 create or replace TYPE t_actions IS OBJECT(ID NUMBER(10,0), updated_at DATE, inserted_at DATE,deleted_at DATE);
 create or replace TYPE t_actions_table IS TABLE OF t_actions;
 
-
+--table for second chart
 create or replace TYPE t_top_subjectt IS OBJECT(subject VARCHAR2(60),percent_of_genre NUMBER(10,2));
 create or replace TYPE t_top_subject_table IS TABLE OF t_top_subjectt;
 
-
+--------------------------------------------------------------package filter
 CREATE OR REPLACE PACKAGE films_filter AS
 
     FUNCTION length_desc RETURN t_table;
@@ -129,7 +129,7 @@ BEGIN
     END LOOP;
     RETURN t_result;
 END;
-
+----------------------------------------------------------------------------------
 
 
 
@@ -165,6 +165,7 @@ BEGIN
     RETURN t_result;
 END;
 
+---------------------------------------------------------package query
 CREATE OR REPLACE PACKAGE query AS
     
     PROCEDURE insert_films(
@@ -197,7 +198,7 @@ END;
 
 
 CREATE OR REPLACE PACKAGE BODY query AS
-      
+    --dynamic  
     PROCEDURE update_films(
         v_year IN films.year%TYPE,
         v_length IN films.length%TYPE,
@@ -227,7 +228,7 @@ CREATE OR REPLACE PACKAGE BODY query AS
         EXECUTE IMMEDIATE v_dyn_q;
     END update_films;
 
-    
+    --dynamic
     PROCEDURE insert_films(
         v_year IN films.year%TYPE,
         v_length IN films.length%TYPE,
@@ -252,7 +253,7 @@ CREATE OR REPLACE PACKAGE BODY query AS
         EXECUTE IMMEDIATE v_dyn_q;
     END insert_films;
     
-    
+    --dynamic
     PROCEDURE delete_film(p_id IN films.ID%TYPE) IS 
     v_dyn_q VARCHAR2(200);
     BEGIN
@@ -261,9 +262,14 @@ CREATE OR REPLACE PACKAGE BODY query AS
     END;
 END query;
 
+--------------------------------------------------------------------------------
 
 
 
+--------------------------------------------------------------------------------
+
+
+--triggers
 
 ALTER TABLE  films  ADD (id NUMBER(10));
 UPDATE  films  SET id=ROWNUM;
@@ -312,10 +318,11 @@ END;
 
   
 
+--------------------------------------------------------------------------------
 
 
 
-
+--FUNCTIONS FOR STATISTICS 
 
 
 CREATE OR REPLACE FUNCTION top_year
@@ -372,6 +379,7 @@ BEGIN
 END;
 
 
+--------------------------------------------------------------------------------
 
 
 
@@ -385,7 +393,8 @@ END;
 
 
 
-
+--------------------------------------------------------------------------------
+--algorithm for recommendation system
 alter table films add (count_of_seacrh number(5,0)default 0);
 
 CREATE OR REPLACE PACKAGE algos AS
@@ -421,3 +430,11 @@ CREATE OR REPLACE PACKAGE BODY algos AS
     END top_five_film;
 END;
     
+--------------------------------------------------------------------------------
+  
+  
+  
+  
+  
+
+        
