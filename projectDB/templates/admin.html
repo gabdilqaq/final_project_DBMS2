@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+
+    <!--  Nosifer Font  -->
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+
+    <!--    -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="inner-header">
+            <div class="logo">
+                <a href="/">Kinoplexx</a>
+            </div>
+            <div class="links2">
+                <a href="/statistics">Statistics</a>
+                <a href="/logs">Logs</a>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="inner-content">
+            <div class="form">
+                <form method="post" enctype="multipart/form-data" action="/insert">
+                    <input type="text" placeholder="Title" name="title">
+                    <input type="text" placeholder="Genre" name="genre">
+                    <input type="text" placeholder="Year" name="year">
+                    <input type="text" placeholder="Length" name="length">
+                    <input type="text" placeholder="Actor" name="actor">
+                    <input type="text" placeholder="Actress" name="actress">
+                    <input type="text" placeholder="Director" name="director">
+                    <input type="text" placeholder="Popularity" name="popularity">
+                    <input type="text" placeholder="Awards" name="awards">
+                    <input type="file" placeholder="File" name="file">
+                    <input type="submit">
+                </form>
+            </div>
+            <div class="films">
+                <h3 class="heading">All films:</h3>
+                <div class="blocks">
+                    {% for film in films %}
+                    <div class="block">
+                        <div class="poster">
+                            <img src="{{ url_for('static', filename='images/'+film[9]) }}" alt="" width="100">
+                        </div>
+                        <div class="title">
+                            <a href="film/{{ film[10] }}">{{ film[0] }}</a>
+                        </div>
+                        <div class="links">
+                            <a href="/update/{{ film[10] }}" class="update">update</a>
+                            <a href="/delete/{{ film[10] }}" class="delete">delete</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

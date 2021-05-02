@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics.css')}}">
+
+    <!--  Nosifer Font  -->
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+
+    <!--    -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+    <!--  Chart js  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="inner-header">
+            <div class="logo">
+                <a href="/">Kinoplexx</a>
+            </div>
+            <div class="links">
+                <a href="/admin">Admin panel</a>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="inner-content">
+            <div class="charts">
+                <canvas id="bar" width="600px" height="250px"></canvas>
+                <canvas id="pie" width="600px" height="250px"></canvas>
+            </div>
+        </div>
+    </div>
+        <script>
+        var canvasBar = document.getElementById('bar');
+        var bar = new Chart(canvasBar, {
+            type: 'bar',
+            data: {
+                labels: [{% for item in labels %} "{{item}}", {% endfor %}],
+                datasets: [
+                    {
+                        label: 'Number of films',
+                        data: [{% for data in data_sets %} {{ data }}, {% endfor %}],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 129, 102, 1)',
+                            'rgba(234, 162, 235, 1)',
+
+                        ],
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var canvasPie = document.getElementById('pie')
+        var pie = new Chart(canvasPie, {
+            type: 'pie',
+            data: {
+                labels: [{% for item in labels2 %} "{{item}}", {% endfor %}],
+                datasets: [
+                    {
+                        label: 'Pie chart',
+                        data: [{% for data in data_sets2 %} {{ data }}, {% endfor %}],
+                        backgroundColor: [
+                            'rgba(187, 255, 62, 1)',
+                            'rgba(62, 235, 255, 1)',
+                            'rgba(255, 129, 102, 1)',
+                            'rgba(254, 244, 138, 1)',
+                            'rgba(234, 162, 235, 1)',
+                            'rgba(125, 125, 125, 1)',
+                        ],
+                    }
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+</html>

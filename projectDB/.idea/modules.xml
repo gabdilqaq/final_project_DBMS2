@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/projectDB.iml" filepath="$PROJECT_DIR$/.idea/projectDB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../projectDB-Ku/.idea/projectDB-Ku.iml" filepath="$PROJECT_DIR$/../projectDB-Ku/.idea/projectDB-Ku.iml" />
+    </modules>
+  </component>
+</project>

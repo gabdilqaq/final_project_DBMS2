@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!--  Nosifer Font  -->
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+
+    <!--    -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="inner-header">
+            <div class="logo">
+                Kinoplexx
+            </div>
+            <div class="admin__link">
+                <a href="/admin">Admin panel</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="inner-content">
+            <div class="top-films">
+                <h3 class="heading">Top 5 Films</h3>
+                <div class="cards">
+                    {% for top_film in top_films %}
+                    <a href="/film/{{ top_film[0] }}">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/'+top_film[2]) }}" width="100%">
+                            <span class="title">{{ top_film[1] }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="search">
+                <div class="inner-search">
+                    <form method="post">
+                        <div class="block">
+                            <input type="text" name="text" id="search__in">
+                            <input type="submit" value="Search" id="search__btn">
+                        </div>
+                    </form>
+                    <form method="post">
+                        <div class="filter">
+                            <div class="col">
+                                <span>Year:</span>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="1988">
+                                    <span>1988</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="1989">
+                                    <span>1989</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="1990">
+                                    <span>1990</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="1991">
+                                    <span>1991</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="1992">
+                                    <span>1992</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="1993">
+                                    <span>1993</span>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <span>Genre:</span>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="Comedy">
+                                    <span>Comedy</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="War">
+                                    <span>War</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="Crime">
+                                    <span>Crime</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="Horror">
+                                    <span>Horror</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="Drama">
+                                    <span>Drama</span>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="Science Fiction">
+                                    <span>Science Fiction</span>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="Popular">
+                                    <span>Popular</span>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="wrapper">
+                                    <input type="radio" name="data" value="Length">
+                                    <span>Length</span>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <input type="submit" id="filter_btn" value="Sort">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="films">
+                <h3 class="heading">All Films</h3>
+                <div class="cards">
+                    {% for film in films %}
+                    <a href="/film/{{ film[0] }}">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='images/'+film[2]) }}" width="100%">
+                            <span class="title">{{ film[1] }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

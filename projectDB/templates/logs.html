@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/logs.css')}}">
+
+    <!--  Nosifer Font  -->
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+
+    <!--    -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="inner-header">
+            <div class="logo">
+                <a href="/">Kinoplexx</a>
+            </div>
+            <div class="links">
+                <a href="/admin">Admin panel</a>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="inner-content">
+            <table class="logs">
+                <tr>
+                    <th>ID</th>
+                    <th>Inserted_at</th>
+                    <th>Updated_at</th>
+                    <th>Deleted_at</th>
+                </tr>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item[0] }}</td>
+                        <td>{{ item[2] }}</td>
+                        <td>{{ item[1] }}</td>
+                        <td>{{ item[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

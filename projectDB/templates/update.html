@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/update.css')}}">
+
+    <!--  Nosifer Font  -->
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+
+    <!--    -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="inner-header">
+            <div class="logo">
+                <a href="/">Kinoplexx</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="inner-content">
+            <div class="form">
+                <form method="post" enctype="multipart/form-data" action="/update">
+                    <input type="text" name="title" value="{{ film[0] }}">
+                    <input type="text" name="genre" value="{{ film[1] }}">
+                    <input type="text" name="year" value="{{ film[2] }}">
+                    <input type="text" name="length" value="{{ film[3] }}">
+                    <input type="text" name="actor" value="{{ film[4] }}">
+                    <input type="text" name="actress" value="{{ film[5] }}">
+                    <input type="text" name="director" value="{{ film[6] }}">
+                    <input type="text" name="popularity" value="{{ film[7] }}">
+                    <input type="text" name="awards" value="{{ film[8] }}">
+                    <input type="file" name="file">
+                    <input type="hidden" name="id" value="{{ film[10] }}">
+                    <input type="submit" value="update">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
